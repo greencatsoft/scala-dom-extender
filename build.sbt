@@ -30,7 +30,7 @@ pomExtra in ThisBuild := (
 
 resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
-publishTo := {
+publishTo in ThisBuild := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
@@ -49,6 +49,9 @@ val scalaSettings = Seq(
   unmanagedSourceDirectories in Test := (scalaSource in Test).value :: Nil)
 
 lazy val root = project.in(file(".")).
+  settings(
+    skip in publish := true
+  ).
   aggregate(extJS, extJVM)
 
 lazy val ext = crossProject(JSPlatform, JVMPlatform).
